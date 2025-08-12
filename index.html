@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Mall - Buy & Sell Local Goods</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-shopping-bag logo-icon"></i>
+                    <h1>Ghana Mall</h1>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search for local products...">
+                    <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="user-actions">
+                    <a href="#" id="login-link" onclick="showPage('login')"><i class="fas fa-user"></i> Login</a>
+                    <a href="#" class="cart-icon" onclick="showPage('cart')">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('products')">Products</a></li>
+                    <li><a href="#" onclick="showPage('cart')">Cart</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="container">
+                <h2>Authentic Ghanaian Products Delivered to You</h2>
+                <p>Discover the best locally made goods from artisans and farmers across Ghana. Support local businesses and enjoy unique products.</p>
+                <div>
+                    <button class="btn" onclick="showPage('products')">Shop Now</button>
+                    <button class="btn btn-secondary" onclick="showPage('about')">Learn More</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <!-- Categories -->
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="categories">
+                <div class="category-card" onclick="filterCategory('fabrics')">
+                    <div class="category-img" style="background-image: url('https://www.palacetravel.com/wp-content/uploads/2023/01/kenkey-and-Fish.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Traditional Foods</h3>
+                        <p>Kenkey, Fufu, and more</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="filterCategory('handicrafts')">
+                    <div class="category-img" style="background-image: url('https://www.gepaghana.org/cms/wp-content/uploads/2019/09/handicraft-potrait.png');"></div>
+                    <div class="category-content">
+                        <h3>Handicrafts</h3>
+                        <p>Wood carvings, baskets, pottery</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="filterCategory('food')">
+                    <div class="category-img" style="background-image: url('https://eatwithafia.com/wp-content/uploads/2020/11/DSC09788.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Food & Spices</h3>
+                        <p>Shito, Gari, spices</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" onclick="filterCategory('beauty')">
+                    <div class="category-img" style="background-image: url('shea.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Beauty Products</h3>
+                        <p>Natural soaps, oils, creams</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Products -->
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products" id="featured-products">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+        
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <div class="testimonial-container">
+                    <div class="testimonial">
+                        <p class="testimonial-text">"The quality of the Kente cloth I purchased exceeded my expectations. Authentic and beautifully made!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-img" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
+                            <div class="author-info">
+                                <h4>Ama Mensah</h4>
+                                <p>Accra</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"The shea butter cream is amazing! My skin has never felt better. Will definitely buy again."</p>
+                        <div class="testimonial-author">
+                            <div class="author-img" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+                            <div class="author-info">
+                                <h4>Kwame Osei</h4>
+                                <p>Kumasi</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Fast delivery and excellent customer service. The wooden carvings I bought are perfect for my home decor."</p>
+                        <div class="testimonial-author">
+                            <div class="author-img" style="background-image: url('https://randomuser.me/api/portraits/women/68.jpg');"></div>
+                            <div class="author-info">
+                                <h4>Esi Boateng</h4>
+                                <p>Tema</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"I love supporting local artisans through Ghana Mall. The products are authentic and reasonably priced."</p>
+                        <div class="testimonial-author">
+                            <div class="author-img" style="background-image: url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
+                            <div class="author-info">
+                                <h4>Kofi Ansah</h4>
+                                <p>Cape Coast</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Products Page -->
+    <section id="products" class="page">
+        <div class="container">
+            <h2 class="section-title">All Products</h2>
+            <div class="filter-options">
+                <select id="category-filter" onchange="filterProducts()">
+                    <option value="all">All Categories</option>
+                    <option value="fabrics">Traditional Fabrics</option>
+                    <option value="handicrafts">Handicrafts</option>
+                    <option value="food">Food & Spices</option>
+                    <option value="beauty">Beauty Products</option>
+                </select>
+                <input type="text" id="search-filter" placeholder="Search products..." oninput="filterProducts()">
+            </div>
+            <div class="products" id="all-products">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cart Page -->
+    <section id="cart" class="page">
+        <div class="container">
+            <h2 class="section-title">Your Shopping Cart</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded dynamically -->
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₵ 0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping:</span>
+                        <span id="shipping">₵ 15.00</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span id="total">₵ 15.00</span>
+                    </div>
+                    <button class="btn" onclick="checkout()">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Login Page -->
+    <section id="login" class="page">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section-title">Login to Your Account</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p>Don't have an account? <a href="#" onclick="showPage('register')">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Register Page -->
+    <section id="register" class="page">
+        <div class="container">
+            <div class="form-container">
+                <h2 class="section-title">Create an Account</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Register</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <p>Already have an account? <a href="#" onclick="showPage('login')">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Page -->
+    <section id="about" class="page">
+        <div class="container">
+            <h2 class="section-title">About Ghana Mall</h2>
+            <div class="about-content">
+                <p>Ghana Mall is a premier e-commerce platform dedicated to showcasing and promoting authentic Ghanaian products. Our mission is to connect local artisans, farmers, and producers with customers who appreciate quality, handmade goods.</p>
+                
+                <h3>Our Story</h3>
+                <p>Founded in 2023, Ghana Mall was born out of a desire to support local businesses and preserve Ghana's rich cultural heritage. We noticed that many talented artisans struggled to reach wider markets, while consumers found it difficult to source authentic local products.</p>
+                
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Traditional fabrics and clothing</li>
+                    <li>Handcrafted items and artwork</li>
+                    <li>Organic food products and spices</li>
+                    <li>Natural beauty and skincare products</li>
+                    <li>Locally made home goods and decor</li>
+                </ul>
+                
+                <h3>Our Commitment</h3>
+                <p>We are committed to fair trade practices and ensuring that our producers receive fair compensation for their work. By shopping with us, you're directly supporting Ghanaian artisans and helping to preserve traditional crafts.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Page -->
+    <section id="contact" class="page">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-container">
+                <div class="form-container">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="contact-name">Full Name</label>
+                            <input type="text" id="contact-name" class="form-control" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email Address</label>
+                            <input type="email" id="contact-email" class="form-control" placeholder="Your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" class="form-control" placeholder="Subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" class="form-control" rows="5" placeholder="Your message" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Independence Ave, Accra, Ghana</p>
+                    <p><i class="fas fa-phone"></i> +233 24 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@ghanamall.com</p>
+                    <p><i class="fas fa-clock"></i> Monday-Friday: 9am-5pm</p>
+                    
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Ghana Mall</h3>
+                    <p>Your premier destination for authentic Ghanaian products. Supporting local artisans and farmers across the country.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('products')">Products</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="#" onclick="filterCategory('fabrics')">Traditional Fabrics</a></li>
+                        <li><a href="#" onclick="filterCategory('handicrafts')">Handicrafts</a></li>
+                        <li><a href="#" onclick="filterCategory('food')">Food & Spices</a></li>
+                        <li><a href="#" onclick="filterCategory('beauty')">Beauty Products</a></li>
+                        <li><a href="#">Home Decor</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Independence Ave, Accra</p>
+                    <p><i class="fas fa-phone"></i> +233 24 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@ghanamall.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Ghana Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
